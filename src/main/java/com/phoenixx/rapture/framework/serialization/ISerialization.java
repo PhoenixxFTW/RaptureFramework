@@ -2,9 +2,8 @@ package com.phoenixx.rapture.framework.serialization;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-20
- * 6:46 p.m.
+ * @project RaptureFramework
+ * @since 6:46 p.m [2020-11-20]
  *
  * Used to serialize / deserialize objects
  */

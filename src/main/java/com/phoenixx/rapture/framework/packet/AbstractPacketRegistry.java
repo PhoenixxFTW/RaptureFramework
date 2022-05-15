@@ -12,9 +12,8 @@ import java.util.Map;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-25
- * 3:28 a.m.
+ * @project RaptureFramework
+ * @since 3:28 a.m [2020-11-25]
  *
  * This registry handles all packets along with handlers and sub registries.
  */

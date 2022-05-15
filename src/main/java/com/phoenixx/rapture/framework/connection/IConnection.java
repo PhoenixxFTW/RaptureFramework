@@ -13,9 +13,8 @@ import java.util.UUID;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-23
- * 6:31 p.m.
+ * @project RaptureFramework
+ * @since 6:31 p.m [2020-11-23]
  *
  * This interface is used by any connection thats made to the server.
  */

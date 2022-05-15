@@ -5,9 +5,8 @@ import io.netty.util.AttributeKey;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-25
- * 3:52 a.m.
+ * @project RaptureFramework
+ * @since 3:52 a.m [2020-11-25]
  */
 public interface IProtocol {
 

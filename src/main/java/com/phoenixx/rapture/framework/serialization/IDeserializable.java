@@ -4,9 +4,8 @@ import com.phoenixx.rapture.framework.packet.PacketBuffer;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-12-02
- * 8:58 p.m.
+ * @project RaptureFramework
+ * @since 8:58 p.m [2020-12-02]
  */
 public interface IDeserializable {
 

@@ -4,9 +4,8 @@ import com.phoenixx.rapture.framework.serialization.ISerialization;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:01 p.m.
+ * @project RaptureFramework
+ * @since 11:01 p.m [2020-11-16]
  */
 public interface IPacket extends ISerialization {
 

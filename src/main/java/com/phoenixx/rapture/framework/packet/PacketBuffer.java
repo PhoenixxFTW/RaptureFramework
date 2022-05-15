@@ -7,7 +7,6 @@ import io.netty.handler.codec.DecoderException;
 import io.netty.handler.codec.EncoderException;
 import io.netty.util.ByteProcessor;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,9 +22,8 @@ import java.util.UUID;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:07 p.m.
+ * @project RaptureFramework
+ * @since 11:07 p.m [2020-11-16]
  */
 public class PacketBuffer extends ByteBuf {
     private final ByteBuf byteBuf;
@@ -145,11 +143,11 @@ public class PacketBuffer extends ByteBuf {
     /**
      * Reads a length-prefixed array of longs from the buffer.
      */
-    public long[] readLongArray(@Nullable long[] array) {
+    public long[] readLongArray(long[] array) {
         return this.readLongArray(array, this.readableBytes() / 8);
     }
 
-    public long[] readLongArray(@Nullable long[] array, int maxLength) {
+    public long[] readLongArray(long[] array, int maxLength) {
         int i = this.readVarInt();
         if (array == null || array.length != i) {
             if (i > maxLength) {
@@ -672,7 +670,6 @@ public class PacketBuffer extends ByteBuf {
 
             long b = (long) byteBuf.readUnsignedByte();
             if (b >= 0x80) {
-                readMore = true;
                 b ^= 0x80;
             } else {
                 readMore = false;

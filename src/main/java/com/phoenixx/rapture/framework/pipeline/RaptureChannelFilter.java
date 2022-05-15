@@ -1,9 +1,5 @@
 package com.phoenixx.rapture.framework.pipeline;
 
-/**
-
- */
-
 import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multiset;
@@ -21,12 +17,11 @@ import java.util.Set;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-17
- * 9:11 p.m.
+ * @project RaptureFramework
+ * @since 9:11 p.m [2020-11-17]
  *
  * An {@link AbstractRemoteAddressFilter} implementation that filters {@link Channel}s by the amount of active
- * connections they already have and whether or not they are blacklisted. A threshold is put on the amount of
+ * connections they already have and whether they are blacklisted. A threshold is put on the amount of
  * successful connections allowed to be made in order to provide security from socket flooder attacks.
  *
  * One instance of this class must be shared across all pipelines in order to ensure that every

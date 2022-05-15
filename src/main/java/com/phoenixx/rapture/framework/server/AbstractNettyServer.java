@@ -18,9 +18,8 @@ import java.net.InetSocketAddress;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-12
- * 9:49 p.m.
+ * @project RaptureFramework
+ * @since 9:49 p.m [2020-11-12]
  */
 public abstract class AbstractNettyServer implements NettyServer, INetty<NetServerHandler<?, ?, ?>> {
 

@@ -15,9 +15,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:30 p.m.
+ * @project RaptureFramework
+ * @since 11:30 p.m [2020-11-16]
  *
  * This class handles all handshake packets that get passed down the pipeline from the {@link ByteDecoder}
  */
@@ -28,7 +27,6 @@ public class HandshakeHandler<REQ extends IHandshakePacket, H extends NetServerH
     private static final Logger LOGGER = LogManager.getLogger(HandshakeHandler.class);
 
     private final H netHandler;
-
 
     public HandshakeHandler(Class<REQ> handshakePacketType, H netHandler) {
         super(handshakePacketType);

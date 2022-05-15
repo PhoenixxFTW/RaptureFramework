@@ -10,9 +10,8 @@ import java.util.Map;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-12
- * 9:52 p.m.
+ * @project RaptureFramework
+ * @since 9:52 p.m [2020-11-12]
  */
 public class NettyConfig {
     private Map<ChannelOption<?>, Object> channelOptions;

@@ -9,9 +9,8 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:13 p.m.
+ * @project RaptureFramework
+ * @since 11:13 p.m [2020-11-16]
  *
  * An interface used to handle server side logic for authenticated clients or
  * clients attempting to authenticate.

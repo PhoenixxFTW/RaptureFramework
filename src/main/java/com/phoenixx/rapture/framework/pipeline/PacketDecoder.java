@@ -9,9 +9,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-17
- * 1:30 a.m.
+ * @project RaptureFramework
+ * @since 1:30 a.m [2020-11-17]
  */
 public class PacketDecoder extends SimpleChannelInboundHandler<ByteBuf> {
 

@@ -2,9 +2,8 @@ package com.phoenixx.rapture.framework.packet;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-20
- * 12:40 a.m.
+ * @project RaptureFramework
+ * @since 12:40 a.m [2020-11-20]
  *
  * An interface meant to represent a logout / disconnection
  */

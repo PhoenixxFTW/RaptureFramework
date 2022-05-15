@@ -21,9 +21,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * RaptureAPI
- * 2020-11-09
- * 11:27 p.m.
+ * @project RaptureFramework
+ * @since 11:27 p.m [2020-11-09]
  *
  * @author https://github.com/Shevchik/UdpServerSocketChannel/tree/master/src/udpserversocketchannel/channel
  */

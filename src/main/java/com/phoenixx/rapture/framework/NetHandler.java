@@ -6,12 +6,11 @@ import io.netty.util.AttributeKey;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:01 p.m.
+ * @project RaptureFramework
+ * @since 11:01 p.m [2020-11-16]
  *
  * This is essentially the core of any client/server object. For example, {@link NetServerHandler} deals with all
- * server related tasks. Creating connections, proccessing handshake / creating sessions, etc etc.
+ * server related tasks. Creating connections, processing handshake / creating sessions, etc etc.
  */
 @ChannelHandler.Sharable
 public abstract class NetHandler {

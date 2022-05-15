@@ -16,9 +16,8 @@ import java.util.UUID;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-23
- * 7:43 p.m.
+ * @project RaptureFramework
+ * @since 7:43 p.m [2020-11-23]
  *
  * Used by any channel that connects to the server. This is also the last handler in the pipeline for channels,
  * and so any packet that's been deserialized, is sent to this to be handled, check {@link #handlePacket(IPacket)}

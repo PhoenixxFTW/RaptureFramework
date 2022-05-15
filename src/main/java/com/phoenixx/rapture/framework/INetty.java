@@ -2,9 +2,8 @@ package com.phoenixx.rapture.framework;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:43 p.m.
+ * @project RaptureFramework
+ * @since 11:43 p.m [2020-11-16]
  *
  *  Used by different netty related objects such as the server, and or clients.
  *

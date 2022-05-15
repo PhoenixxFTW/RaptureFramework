@@ -4,9 +4,8 @@ import java.net.InetSocketAddress;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-12
- * 9:39 p.m.
+ * @project RaptureFramework
+ * @since 9:39 p.m [2020-11-12]
  */
 public interface IServer {
 

@@ -2,9 +2,8 @@ package com.phoenixx.rapture.framework.connection;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-19
- * 1:06 a.m.
+ * @project RaptureFramework
+ * @since 1:06 a.m [2020-11-19]
  *
  * Used to determine what state a connection is in
  */

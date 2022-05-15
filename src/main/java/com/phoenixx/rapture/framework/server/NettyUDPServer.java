@@ -16,9 +16,8 @@ import java.util.Set;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-12
- * 10:01 p.m.
+ * @project RaptureFramework
+ * @since 10:01 p.m [2020-11-12]
  */
 public class NettyUDPServer extends AbstractNettyServer {
 

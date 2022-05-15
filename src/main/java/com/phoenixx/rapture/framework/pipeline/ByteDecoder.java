@@ -16,9 +16,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-17
- * 12:21 a.m.
+ * @project RaptureFramework
+ * @since 12:21 a.m [2020-11-17]
  *
  * This class handles all early requests from the client before they've been logged in
  */

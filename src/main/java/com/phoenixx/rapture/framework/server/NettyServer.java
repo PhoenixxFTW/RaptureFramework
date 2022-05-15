@@ -7,17 +7,16 @@ import java.net.InetSocketAddress;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-12
- * 9:47 p.m.
+ * @project RaptureFramework
+ * @since 9:47 p.m [2020-11-12]
  *
- * An interface thats meant to be implemented by a class that will start up a Netty server at a specified port.
+ * An interface that's meant to be implemented by a class that will start up a Netty server on a specified port.
  */
 public interface NettyServer extends IServer {
 
     /**
      * Handles all the preloading for the server. Creating a bootstrap, adding channel handlers,
-     * setting netty options etc, etc.
+     * setting netty options etc.
      */
     void initializeServer();
 
@@ -25,12 +24,12 @@ public interface NettyServer extends IServer {
      * Binds this server (starts it) on a specific IP / Port.
      *
      * @param socketAddress The provided {@link InetSocketAddress}.
-     * @throws Exception Throws an exception during the start up process if anything goes wrong.
+     * @throws Exception Throws an exception during the start-up process if anything goes wrong.
      */
     void bind(InetSocketAddress socketAddress) throws Exception;
 
     /**
-     * Pretty self explanatory, stops the server. Ex. {@link AbstractNettyServer#stopServer()}.
+     * Pretty self-explanatory, stops the server. Ex. {@link AbstractNettyServer#stopServer()}.
      *
      * @throws Exception Throws an exception during the shutdown process if anything goes wrong.
      */

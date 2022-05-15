@@ -11,9 +11,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * RaptureAPI
- * 2020-11-09
- * 11:29 p.m.
+ * @project RaptureFramework
+ * @since 11:29 p.m [2020-11-09]
  *
  * @author https://github.com/Shevchik/UdpServerSocketChannel/tree/master/src/udpserversocketchannel/channel
  */

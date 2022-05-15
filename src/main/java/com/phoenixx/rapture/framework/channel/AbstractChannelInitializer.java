@@ -13,9 +13,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-18
- * 3:18 p.m.
+ * @project RaptureFramework
+ * @since 3:18 p.m [2020-11-18]
  */
 public abstract class AbstractChannelInitializer extends ChannelInitializer<Channel> implements IChannelInit {
 

@@ -9,6 +9,11 @@ import io.netty.handler.codec.CorruptedFrameException;
 
 import java.util.List;
 
+/**
+ * @author Phoenixx
+ * @project RaptureFramework
+ * @since 12:52 a.m [2020-11-25]
+ */
 @Deprecated
 public class Varint21FrameDecoder extends ByteToMessageDecoder {
 

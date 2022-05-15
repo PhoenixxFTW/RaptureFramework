@@ -11,9 +11,8 @@ import java.util.Map;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-23
- * 7:35 p.m.
+ * @project RaptureFramework
+ * @since 7:35 p.m [2020-11-23]
  *
  * This class will handle all connection related tasks such as saving / removing connections from server memory
  */

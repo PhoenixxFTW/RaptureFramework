@@ -6,9 +6,8 @@ import java.util.UUID;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:03 p.m.
+ * @project RaptureFramework
+ * @since 11:03 p.m [2020-11-16]
  *
  * A session which is created by the {@link NetServerHandler} for a {@link IConnection} that has fully connected
  * and been successfully authenticated

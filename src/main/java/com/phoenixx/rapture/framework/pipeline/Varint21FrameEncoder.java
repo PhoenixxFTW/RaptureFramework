@@ -6,6 +6,11 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
+/**
+ * @author Phoenixx
+ * @project RaptureFramework
+ * @since 12:52 a.m [2020-11-25]
+ */
 @Sharable
 @Deprecated
 public class Varint21FrameEncoder extends MessageToByteEncoder<ByteBuf> {

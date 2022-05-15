@@ -4,9 +4,8 @@ import com.phoenixx.rapture.framework.connection.IConnection;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-16
- * 11:01 p.m.
+ * @project RaptureFramework
+ * @since 11:01 p.m [2020-11-16]
  *
  * This interface is meant to be implemented by packet handlers. After a packet has been deserialized, a request
  * will be made to the given {@link IPacketHandler} to proccess / handle it

@@ -6,9 +6,8 @@ import io.netty.channel.ChannelInitializer;
 
 /**
  * @author Phoenixx
- * RaptureAPI
- * 2020-11-18
- * 3:24 p.m.
+ * @project RaptureFramework
+ * @since 3:24 p.m [2020-11-18]
  */
 public interface IChannelInit {
 

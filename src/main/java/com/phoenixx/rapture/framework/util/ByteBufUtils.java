@@ -31,6 +31,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
+ * @author Phoenixx
+ * @project RaptureFramework
+ * @since 11:01 p.m [2020-11-16]
+ *
  * A class containing various utility methods that act on byte buffers.
  */
 public class ByteBufUtils {
