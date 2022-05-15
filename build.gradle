@@ -1,9 +1,13 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group 'com.phoenixx'
 version '1.0-SNAPSHOT'
+
+def user = System.getenv("repo_user")
+def pass = System.getenv("repo_pass")
 
 repositories {
     mavenCentral()
@@ -22,6 +26,29 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
 
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+        snapshots(MavenPublication) {
+            from components.java
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+            repositories {
+                maven {
+                    url("https://nexus.taah.dev/extra")
+                    credentials {
+                        username = user
+                        password = pass
+                    }
+                }
+            }
+        }
+    }
 }
 
 test {
