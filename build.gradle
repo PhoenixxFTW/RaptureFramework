@@ -42,8 +42,8 @@ publishing {
                 maven {
                     url("https://nexus.taah.dev/extra")
                     credentials {
-                        username = "Taah"
-                        password = "3qgHlbryW0ZYSgB0nDgToapZX/NWSDna1geq/ntdW9MDc8Ed6IjBv5sUCo/1+s7h"
+                        username = user
+                        password = pass
                     }
                 }
             }
