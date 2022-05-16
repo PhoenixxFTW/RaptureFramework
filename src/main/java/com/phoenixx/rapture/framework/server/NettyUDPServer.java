@@ -1,10 +1,10 @@
 package com.phoenixx.rapture.framework.server;
 
 import com.phoenixx.rapture.framework.channel.AbstractChannelInitializer;
+import com.phoenixx.rapture.framework.channel.UDPServerChannel;
 import com.phoenixx.rapture.framework.managers.ConnectionManager;
 import com.phoenixx.rapture.framework.util.NettyConfig;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelOption;
+import io.netty.channel.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +24,11 @@ public class NettyUDPServer extends AbstractNettyServer {
     private static final Logger LOGGER = LogManager.getLogger(NettyUDPServer.class);
 
     public NettyUDPServer(NettyConfig nettyConfig, ConnectionManager<Integer> connectionManager) {
-        super(nettyConfig, connectionManager);
+        this(nettyConfig, connectionManager, UDPServerChannel.class);
+    }
+
+    protected NettyUDPServer(NettyConfig nettyConfig, ConnectionManager<Integer> connectionManager, Class<? extends ServerChannel> serverChannel) {
+        super(nettyConfig, connectionManager, null, serverChannel);
     }
 
     @Override

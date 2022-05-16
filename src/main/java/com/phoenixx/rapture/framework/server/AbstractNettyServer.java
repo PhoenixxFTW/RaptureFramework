@@ -6,10 +6,13 @@ import com.phoenixx.rapture.framework.channel.UDPServerChannel;
 import com.phoenixx.rapture.framework.managers.ConnectionManager;
 import com.phoenixx.rapture.framework.util.NettyConfig;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.AbstractServerChannel;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.ChannelGroupFuture;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,18 +34,20 @@ public abstract class AbstractNettyServer implements NettyServer, INetty<NetServ
     private NetServerHandler<?,?,?> netServerHandler;
     private ConnectionManager<Integer> connectionManager;
     private final ServerBootstrap bootstrap = new ServerBootstrap();
+    private final Class<? extends ServerChannel> serverChannelClass;
 
     private static final Logger LOGGER = LogManager.getLogger(AbstractNettyServer.class);
     public static final ChannelGroup ALL_CHANNELS = new DefaultChannelGroup("RAPTURE-CHANNELS", GlobalEventExecutor.INSTANCE);
 
-    public AbstractNettyServer(NettyConfig nettyConfig, ConnectionManager<Integer> connectionManager){
-        this(nettyConfig, connectionManager,null);
+    public AbstractNettyServer(NettyConfig nettyConfig, ConnectionManager<Integer> connectionManager) {
+        this(nettyConfig, connectionManager,null, NioServerSocketChannel.class);
     }
 
-    public AbstractNettyServer(NettyConfig nettyConfig, ConnectionManager<Integer> connectionManager, AbstractChannelInitializer channelInitializer) {
+    public AbstractNettyServer(NettyConfig nettyConfig, ConnectionManager<Integer> connectionManager, AbstractChannelInitializer channelInitializer, Class<? extends ServerChannel> serverChannelClass) {
         this.nettyConfig = nettyConfig;
         this.connectionManager = connectionManager;
         this.channelInitializer = channelInitializer;
+        this.serverChannelClass = serverChannelClass;
 
         /*String log4jConfigFile = "Rapture-Server-Framework/log4j2.properties";
         PropertyConfigurator.configure(log4jConfigFile);*/
@@ -52,7 +57,7 @@ public abstract class AbstractNettyServer implements NettyServer, INetty<NetServ
     public void initializeServer() {
         LOGGER.info("Initialising network server");
         bootstrap.group(getBossGroup(), getWorkerGroup())
-                .channel(UDPServerChannel.class)
+                .channel(this.serverChannelClass)
                 .childHandler(this.channelInitializer);
         LOGGER.info("Ready to bind");
     }
