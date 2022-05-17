@@ -2,8 +2,6 @@ package com.phoenixx.rapture.framework.packet;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.phoenixx.rapture.framework.util.HexUtils;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.logging.log4j.LogManager;
@@ -126,7 +124,7 @@ public abstract class AbstractPacketRegistry {
      * @param packetBuffer The given {@link PacketBuffer}
      * @return A {@link IPacket} class
      */
-    public Class<? extends IPacket> getPacket(PacketBuffer packetBuffer){
+    public Class<? extends IPacket> getPacket(PacketBuffer packetBuffer) {
         return getPacket(packetBuffer, this);
     }
 
@@ -146,7 +144,7 @@ public abstract class AbstractPacketRegistry {
                 if(registry.getPacketMap().containsKey(discriminator)){
                     packetClass = registry.getPacketMap().get(discriminator);
                 }
-                if(packetClass!= null){
+                if(packetClass!= null) {
                     break;
                 }
             }
