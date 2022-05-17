@@ -3,6 +3,8 @@ package com.phoenixx.rapture.framework.packet;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.phoenixx.rapture.framework.util.HexUtils;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,7 +61,7 @@ public abstract class AbstractPacketRegistry {
             if(this.getPacketRegistryMap().containsKey(packetID)){
                 this.getPacketRegistryMap().get(packetID).decodePacket(ctx, packetBuffer);
             } else {
-                LOGGER.warn("Unknown packet received with type {} Other packets: {} Hex: \n{}", packetID, this.getClass(), HexUtils.hexDump(packetBuffer.getByteArraySafe()));
+                LOGGER.warn("Unknown packet received with type {} Other packets: {} Hex: \n{}", packetID, this.getClass(), ByteBufUtil.prettyHexDump(packetBuffer));
             }
         }
     }
