@@ -7,6 +7,7 @@ import com.phoenixx.rapture.framework.connection.ConnectionStatus;
 import com.phoenixx.rapture.framework.connection.IConnection;
 import com.phoenixx.rapture.framework.packet.IHandshakePacket;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
@@ -45,6 +46,9 @@ public class HandshakeHandler<REQ extends IHandshakePacket, H extends NetServerH
                 ctx.channel().attr(NetHandler.NET_HANDLER_ATTR).set(netHandler);
                 ctx.channel().pipeline().addLast(PacketDecoder.PIPELINE_NAME, new PacketDecoder());
                 ctx.channel().pipeline().addLast(AbstractConnection.CONNECTION_ATTR.name(), connection);
+
+                ctx.fireChannelRead(msg);
+
                 ctx.channel().pipeline().remove(this);
             } else {
                 LOGGER.info("{} has failed to establish a session. Failed the handshake?", ctx.channel().remoteAddress().toString());
