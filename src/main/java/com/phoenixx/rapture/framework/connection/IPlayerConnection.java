@@ -1,7 +1,6 @@
 package com.phoenixx.rapture.framework.connection;
 
 import com.phoenixx.rapture.framework.NetHandler;
-import com.phoenixx.rapture.framework.packet.IPacket;
 import com.phoenixx.rapture.framework.protocol.IProtocol;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
 
@@ -10,17 +9,10 @@ import com.phoenixx.rapture.framework.server.NetServerHandler;
  * @project RaptureFramework
  * @since 11:38 PM [16-05-2022]
  */
-public interface IPlayerConnection<T extends NetHandler> extends IConnection<AbstractSession, IProtocol> {
+public interface IPlayerConnection<T extends NetHandler> extends IConnection<DefaultSession, IProtocol> {
 
     /**
-     * Used to send a {@link IPacket} to this connection
-     *
-     * @param packet The given {@link IPacket}
-     */
-    void sendPacket(IPacket packet);
-
-    /**
-     * Calculate the this connections ping, by getting the difference between the last received
+     * Calculate the connections ping, by getting the difference between the last received
      * ping and the current time
      */
     void calculatePing();
@@ -37,13 +29,13 @@ public interface IPlayerConnection<T extends NetHandler> extends IConnection<Abs
     }
 
     /**
-     * Sets the {@link AbstractSession} for this connection
+     * Sets the {@link DefaultSession} for this connection
      *
-     * @param abstractSession The given {@link AbstractSession}
+     * @param defaultSession The given {@link DefaultSession}
      */
     @Override
-    default void setSession(AbstractSession abstractSession) {
-        throw new UnsupportedOperationException("Cannot set the AbstractSession from a IPlayerConnection!");
+    default void setSession(DefaultSession defaultSession) {
+        throw new UnsupportedOperationException("Cannot set the DefaultSession from a IPlayerConnection!");
     }
 
     /**

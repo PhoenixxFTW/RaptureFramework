@@ -14,87 +14,112 @@ import java.util.Map;
  * @since 9:52 p.m [2020-11-12]
  */
 public class NettyConfig {
-    private Map<ChannelOption<?>, Object> channelOptions;
-    private NioEventLoopGroup bossGroup;
-    private NioEventLoopGroup workerGroup;
+    private int portNumber = 18090;
+    private InetSocketAddress socketAddress;
+
+    private String serverVersion = "1.0.0";
+
     private int bossThreadCount;
     private int workerThreadCount;
-    private InetSocketAddress socketAddress;
-    private int portNumber = 18090;
+    private NioEventLoopGroup bossGroup;
+    private NioEventLoopGroup workerGroup;
+
+    private Map<ChannelOption<?>, Object> channelOptions;
+
     protected ChannelInitializer<? extends Channel> channelInitializer;
+
+    public NettyConfig(InetSocketAddress inetSocketAddress) {
+        this.socketAddress = inetSocketAddress;
+        this.setPortNumber(this.socketAddress.getPort());
+    }
+
+    public NettyConfig setPortNumber(int portNumber) {
+        this.portNumber = portNumber;
+        return this;
+    }
+
+    public NettyConfig setSocketAddress(InetSocketAddress socketAddress) {
+        this.socketAddress = socketAddress;
+        return this;
+    }
+
+    public NettyConfig setServerVersion(String serverVersion) {
+        this.serverVersion = serverVersion;
+        return this;
+    }
+
+    public NettyConfig setChannelOptions(Map<ChannelOption<?>, Object> channelOptions) {
+        this.channelOptions = channelOptions;
+        return this;
+    }
+
+    public NettyConfig setBossGroup(NioEventLoopGroup bossGroup) {
+        this.bossGroup = bossGroup;
+        return this;
+    }
+
+    public NettyConfig setWorkerGroup(NioEventLoopGroup workerGroup) {
+        this.workerGroup = workerGroup;
+        return this;
+    }
+
+    public NettyConfig setBossThreadCount(int bossThreadCount) {
+        this.bossThreadCount = bossThreadCount;
+        return this;
+    }
+
+    public NettyConfig setWorkerThreadCount(int workerThreadCount) {
+        this.workerThreadCount = workerThreadCount;
+        return this;
+    }
+
+    public int getPortNumber() {
+        return this.portNumber;
+    }
+
+    public synchronized InetSocketAddress getSocketAddress() {
+        if (null == this.socketAddress) {
+            this.socketAddress = new InetSocketAddress(this.portNumber);
+        }
+        return this.socketAddress;
+    }
+
+    public String getServerVersion() {
+        return serverVersion;
+    }
+
+    public int getWorkerThreadCount() {
+        return this.workerThreadCount;
+    }
+
+    public int getBossThreadCount() {
+        return this.bossThreadCount;
+    }
 
     public Map<ChannelOption<?>, Object> getChannelOptions() {
         return channelOptions;
     }
 
-    public void setChannelOptions(
-            Map<ChannelOption<?>, Object> channelOptions) {
-        this.channelOptions = channelOptions;
-    }
-
     public synchronized NioEventLoopGroup getBossGroup() {
-        if (null == bossGroup) {
-            if (0 >= bossThreadCount) {
-                bossGroup = new NioEventLoopGroup();
+        if (null == this.bossGroup) {
+            if (0 >= this.bossThreadCount) {
+                this.bossGroup = new NioEventLoopGroup();
             } else {
-                bossGroup = new NioEventLoopGroup(bossThreadCount);
+                this.bossGroup = new NioEventLoopGroup(this.bossThreadCount);
             }
         }
-        return bossGroup;
+        return this.bossGroup;
     }
 
-    public void setBossGroup(NioEventLoopGroup bossGroup) {
-        this.bossGroup = bossGroup;
-    }
 
     public synchronized NioEventLoopGroup getWorkerGroup() {
-        if (null == workerGroup) {
-            if (0 >= workerThreadCount) {
-                workerGroup = new NioEventLoopGroup();
+        if (null == this.workerGroup) {
+            if (0 >= this.workerThreadCount) {
+                this.workerGroup = new NioEventLoopGroup();
             } else {
-                workerGroup = new NioEventLoopGroup(workerThreadCount);
+                this.workerGroup = new NioEventLoopGroup(this.workerThreadCount);
             }
         }
-        return workerGroup;
+        return this.workerGroup;
     }
-
-    public void setWorkerGroup(NioEventLoopGroup workerGroup) {
-        this.workerGroup = workerGroup;
-    }
-
-    public int getBossThreadCount() {
-        return bossThreadCount;
-    }
-
-    public void setBossThreadCount(int bossThreadCount) {
-        this.bossThreadCount = bossThreadCount;
-    }
-
-    public int getWorkerThreadCount() {
-        return workerThreadCount;
-    }
-
-    public void setWorkerThreadCount(int workerThreadCount) {
-        this.workerThreadCount = workerThreadCount;
-    }
-
-    public synchronized InetSocketAddress getSocketAddress() {
-        if (null == socketAddress) {
-            socketAddress = new InetSocketAddress(portNumber);
-        }
-        return socketAddress;
-    }
-
-    public void setSocketAddress(InetSocketAddress socketAddress) {
-        this.socketAddress = socketAddress;
-    }
-
-    public int getPortNumber() {
-        return portNumber;
-    }
-
-    public void setPortNumber(int portNumber) {
-        this.portNumber = portNumber;
-    }
-
 }

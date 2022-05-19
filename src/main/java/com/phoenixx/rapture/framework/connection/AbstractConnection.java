@@ -10,6 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.ReadTimeoutException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -23,10 +24,10 @@ import java.util.UUID;
  * and so any packet that's been deserialized, is sent to this to be handled, check {@link #handlePacket(IPacket)}
  *
  * @param <NH> The {@link NetServerHandler} responsible for this connection
- * @param <S> The {@link AbstractSession} that will be applied to this connection after being authenticated
+ * @param <S> The {@link DefaultSession} that will be applied to this connection after being authenticated
  * @param <T> The {@link IProtocol} this connection is meant to follow
  */
-public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S extends AbstractSession, T extends IProtocol> extends SimpleChannelInboundHandler<IPacket> implements IConnection<S,T> {
+public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S extends DefaultSession, T extends IProtocol> extends SimpleChannelInboundHandler<IPacket> implements IConnection<S,T> {
 
     private final int id;
     private final UUID uuid;
@@ -51,7 +52,7 @@ public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S e
      *
      * @param ctx The {@link ChannelHandlerContext} attached to the {@link Channel} for this connection
      * @param packet The {@link IPacket} we received
-     * @throws Exception Throws and exception if anything goes wrong while handling this {@link IPacket}
+     * @throws Exception Throws an exception if anything goes wrong while handling this {@link IPacket}
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, IPacket packet) throws Exception {
@@ -69,15 +70,13 @@ public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S e
         IPacketHandler<P, ?, ? super AbstractConnection<NH,S,T>> handler = (IPacketHandler<P, ?, ? super AbstractConnection<NH,S,T>>) getProtocol().getPacketRegistry().getRegistryFromPacket(packet.getClass()).getPacketHandler(packet.getClass());
         if(handler != null) {
             handler.processPacket(packet, this);
-        } else {
-            System.out.println("HANDLER WAS NULL @@@@@@@@ FOR PACKER: " + packet.getClass().getSimpleName());
         }
     }
 
     /**
      * Called when a session has been established for this connection
      *
-     * @param session The given {@link AbstractSession}
+     * @param session The given {@link DefaultSession}
      */
     @Deprecated
     public abstract void sessionEstablished(S session);
@@ -92,7 +91,7 @@ public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S e
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+    public void channelInactive(@NotNull ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
         LOGGER.info("Client {} ({}) disconnected.", this.session !=null ? this.session.getName() : id, ctx.channel().remoteAddress().toString());
         getNetHandler().getAbstractNettyServer().getConnectionManager().removeConnection(this.getConnectionID());
@@ -105,8 +104,8 @@ public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S e
 
     @Override
     @SuppressWarnings("unchecked")
-    public void setSession(AbstractSession abstractSession) {
-        this.session = (S) abstractSession;
+    public void setSession(DefaultSession defaultSession) {
+        this.session = (S) defaultSession;
     }
 
     @Override

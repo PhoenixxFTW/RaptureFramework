@@ -12,12 +12,12 @@ import java.util.UUID;
  * A session which is created by the {@link NetServerHandler} for a {@link IConnection} that has fully connected
  * and been successfully authenticated
  */
-public abstract class AbstractSession {
+public class DefaultSession {
 
     private String name;
     private final UUID uuid;
 
-    public AbstractSession(UUID uuid) {
+    public DefaultSession(UUID uuid) {
         this.uuid = uuid;
     }
 

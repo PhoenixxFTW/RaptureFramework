@@ -1,6 +1,6 @@
 package com.phoenixx.rapture.framework.protocol;
 
-import com.phoenixx.rapture.framework.packet.AbstractPacketRegistry;
+import com.phoenixx.rapture.framework.packet.impl.AbstractPacketRegistry;
 import io.netty.util.AttributeKey;
 
 /**

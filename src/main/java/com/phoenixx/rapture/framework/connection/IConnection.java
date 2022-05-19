@@ -18,7 +18,7 @@ import java.util.UUID;
  *
  * This interface is used by any connection thats made to the server.
  */
-public interface IConnection<S extends AbstractSession, T extends IProtocol> extends ChannelHandler {
+public interface IConnection<S extends DefaultSession, T extends IProtocol> extends ChannelHandler {
 
     AttributeKey<IConnection<?,?>> CONNECTION_ATTR = AttributeKey.valueOf("connection_handler");
 
@@ -31,11 +31,11 @@ public interface IConnection<S extends AbstractSession, T extends IProtocol> ext
     void setConnectionStatus(ConnectionStatus status);
 
     /**
-     * Sets the {@link AbstractSession} for this connection
+     * Sets the {@link DefaultSession} for this connection
      *
-     * @param abstractSession The given {@link AbstractSession}
+     * @param defaultSession The given {@link DefaultSession}
      */
-    void setSession(AbstractSession abstractSession);
+    void setSession(DefaultSession defaultSession);
 
     /**
      * Sets the current {@link IProtocol} for this connection, used to retrieve packets
@@ -89,7 +89,7 @@ public interface IConnection<S extends AbstractSession, T extends IProtocol> ext
     Channel getChannel();
 
     /**
-     * Gets this connections name if it has a {@link AbstractSession}, otherwise, just returns the connection ID
+     * Gets this connections name if it has a {@link DefaultSession}, otherwise, just returns the connection ID
      *
      * @return This connections Name or ID
      */
@@ -107,10 +107,10 @@ public interface IConnection<S extends AbstractSession, T extends IProtocol> ext
     }
 
     /**
-     * The {@link AbstractSession} is created once this connection has fully established a connection
+     * The {@link DefaultSession} is created once this connection has fully established a connection
      * with the given server, otherwise its null
      *
-     * @return This connections {@link AbstractSession}
+     * @return This connections {@link DefaultSession}
      */
     @Nullable
     S getSession();

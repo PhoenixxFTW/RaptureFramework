@@ -2,12 +2,11 @@ package com.phoenixx.rapture.framework.pipeline;
 
 import com.phoenixx.rapture.framework.NetHandler;
 import com.phoenixx.rapture.framework.connection.AbstractConnection;
-import com.phoenixx.rapture.framework.connection.AbstractSession;
+import com.phoenixx.rapture.framework.connection.DefaultSession;
 import com.phoenixx.rapture.framework.connection.ConnectionStatus;
 import com.phoenixx.rapture.framework.connection.IConnection;
 import com.phoenixx.rapture.framework.packet.IHandshakePacket;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
@@ -38,9 +37,9 @@ public class HandshakeHandler<REQ extends IHandshakePacket, H extends NetServerH
     protected void channelRead0(ChannelHandlerContext ctx, REQ msg) throws Exception {
         IConnection<?,?> connection = ctx.channel().attr(IConnection.CONNECTION_ATTR).get();
         if(connection != null) {
-            AbstractSession abstractSession = netHandler.processHandshake(msg, (C) connection);
-            if (abstractSession != null) {
-                connection.setSession(abstractSession);
+            DefaultSession defaultSession = netHandler.processHandshake(msg, (C) connection);
+            if (defaultSession != null) {
+                connection.setSession(defaultSession);
                 connection.setConnectionStatus(ConnectionStatus.CONNECTED);
 
                 ctx.channel().attr(NetHandler.NET_HANDLER_ATTR).set(netHandler);

@@ -1,7 +1,7 @@
 package com.phoenixx.rapture.framework.server;
 
 import com.phoenixx.rapture.framework.NetHandler;
-import com.phoenixx.rapture.framework.connection.AbstractSession;
+import com.phoenixx.rapture.framework.connection.DefaultSession;
 import com.phoenixx.rapture.framework.connection.IConnection;
 import com.phoenixx.rapture.framework.packet.IHandshakePacket;
 import io.netty.channel.Channel;
@@ -17,9 +17,9 @@ import org.jetbrains.annotations.Nullable;
  *
  * @param <HS> The {@link IHandshakePacket} that this {@link NetServerHandler} listens for.
  * @param <C> The {@link IConnection} this {@link NetServerHandler} creates for successfully connected clients
- * @param <S> The {@link AbstractSession} this {@link NetServerHandler} creates for authenticated clients
+ * @param <S> The {@link DefaultSession} this {@link NetServerHandler} creates for authenticated clients
  */
-public abstract class NetServerHandler<HS extends IHandshakePacket, C extends IConnection<S,?>, S extends AbstractSession> extends NetHandler {
+public abstract class NetServerHandler<HS extends IHandshakePacket, C extends IConnection<S,?>, S extends DefaultSession> extends NetHandler {
 
     private AbstractNettyServer abstractNettyServer;
 
@@ -33,11 +33,11 @@ public abstract class NetServerHandler<HS extends IHandshakePacket, C extends IC
     public abstract C createConnection(Channel channel);
 
     /**
-     * Processes a handshake sent by the client, and creates a {@link AbstractSession}
+     * Processes a handshake sent by the client, and creates a {@link DefaultSession}
      *
      * @param packet The {@link IHandshakePacket} itself
      * @param connection The {@link IConnection} sending the handshake
-     * @return The {@link AbstractSession} that was created IF the client has successfully logged in
+     * @return The {@link DefaultSession} that was created IF the client has successfully logged in
      */
     @Nullable
     public abstract S processHandshake(HS packet, C connection);
@@ -48,5 +48,10 @@ public abstract class NetServerHandler<HS extends IHandshakePacket, C extends IC
 
     public AbstractNettyServer getAbstractNettyServer() {
         return abstractNettyServer;
+    }
+
+    @Override
+    public String getName() {
+        return "server_net_handler";
     }
 }

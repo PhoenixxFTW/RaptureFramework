@@ -1,7 +1,10 @@
-package com.phoenixx.rapture.framework.packet;
+package com.phoenixx.rapture.framework.packet.impl;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.phoenixx.rapture.framework.packet.IPacket;
+import com.phoenixx.rapture.framework.packet.IPacketHandler;
+import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.logging.log4j.LogManager;

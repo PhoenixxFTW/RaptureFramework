@@ -1,4 +1,6 @@
-package com.phoenixx.rapture.framework.packet;
+package com.phoenixx.rapture.framework.packet.impl;
+
+import com.phoenixx.rapture.framework.packet.IPacket;
 
 /**
  * @author Phoenixx
