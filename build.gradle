@@ -14,17 +14,17 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.jetbrains:annotations:20.1.0'
+    implementation 'org.jetbrains:annotations:20.1.0'
 
     // https://mvnrepository.com/artifact/io.netty/netty-all
-    compileOnly group: 'io.netty', name: 'netty-all', version: '4.1.77.Final'
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.77.Final'
 
     // https://mvnrepository.com/artifact/log4j/log4j
-    compileOnly 'org.apache.logging.log4j:log4j-api:2.17.2'
-    compileOnly 'org.apache.logging.log4j:log4j-core:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.2'
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.2'
 
     // https://mvnrepository.com/artifact/com.google.guava/guava
-    compileOnly group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
 
 }
 

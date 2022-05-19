@@ -46,8 +46,6 @@ public class HandshakeHandler<REQ extends IHandshakePacket, H extends NetServerH
                 ctx.channel().pipeline().addLast(PacketDecoder.PIPELINE_NAME, new PacketDecoder());
                 ctx.channel().pipeline().addLast(AbstractConnection.CONNECTION_ATTR.name(), connection);
 
-                ctx.fireChannelRead(msg);
-
                 ctx.channel().pipeline().remove(this);
             } else {
                 LOGGER.info("{} has failed to establish a session. Failed the handshake?", ctx.channel().remoteAddress().toString());
