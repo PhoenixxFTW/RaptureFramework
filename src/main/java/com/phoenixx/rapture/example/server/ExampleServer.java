@@ -1,5 +1,6 @@
 package com.phoenixx.rapture.example.server;
 
+import com.phoenixx.rapture.example.client.ClientChannelHandler;
 import com.phoenixx.rapture.framework.connection.DefaultSession;
 import com.phoenixx.rapture.framework.pipeline.HandshakeHandler;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
@@ -19,6 +20,7 @@ public class ExampleServer {
     public static void main(String[] args) throws Exception {
         NetServerHandler<ExampleLoginPacket,ExamplePlayerConnection, DefaultSession> netServerHandler = new ExampleNetHandler();
         NettyTCPServer tcpServer = new NettyTCPServer(new NettyConfig(new InetSocketAddress(PORT)).setServerVersion("1.0.0"), netServerHandler, channel -> {
+            channel.pipeline().addLast("channel_client_init", new ClientChannelHandler());
             channel.pipeline().addLast(HandshakeHandler.HANDSHAKE_HANDLER_ATTR.name(), new HandshakeHandler<>(ExampleLoginPacket.class, netServerHandler));
             return netServerHandler;
         });

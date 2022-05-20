@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 /**
  * @author Phoenixx
  * @project RaptureFramework
@@ -18,11 +20,13 @@ public class ExampleNetHandler extends NetServerHandler<ExampleLoginPacket, Exam
 
     @Override
     public @Nullable ExamplePlayerConnection createConnection(Channel channel) {
-        return null;
+        return new ExamplePlayerConnection(this.getAbstractNettyServer().getConnectionManager().getConnections().size()+1, UUID.randomUUID(),this, channel);
     }
 
     @Override
     public @Nullable DefaultSession processHandshake(ExampleLoginPacket packet, ExamplePlayerConnection connection) {
-        return null;
+        DefaultSession session = new DefaultSession(connection.getConnectionUUID());
+        session.setName("ExamplePlayer");
+        return session;
     }
 }

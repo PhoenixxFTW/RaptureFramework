@@ -37,7 +37,7 @@ public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S e
     private S session;
     private ConnectionStatus connectionStatus = ConnectionStatus.NOT_CONNECTED;
 
-    public final Logger LOGGER = LogManager.getLogger(getClass());
+    protected final Logger LOGGER = LogManager.getLogger(AbstractConnection.class);
 
     public AbstractConnection(int id, UUID uuid, NH netHandler, Channel channel) {
         this.id = id;
@@ -93,6 +93,7 @@ public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S e
     @Override
     public void channelInactive(@NotNull ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
+        this.setConnectionStatus(ConnectionStatus.CLOSED);
         LOGGER.info("Client {} ({}) disconnected.", this.session !=null ? this.session.getName() : id, ctx.channel().remoteAddress().toString());
         getNetHandler().getAbstractNettyServer().getConnectionManager().removeConnection(this.getConnectionID());
     }
