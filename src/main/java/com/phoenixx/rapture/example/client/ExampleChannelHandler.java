@@ -1,5 +1,7 @@
 package com.phoenixx.rapture.example.client;
 
+import com.phoenixx.rapture.example.server.ExampleLoginPacket;
+import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -9,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
  * @project RaptureFramework
  * @since 11:08 PM [18-05-2022]
  */
-public class ClientChannelHandler extends ChannelInboundHandlerAdapter {
+public class ExampleChannelHandler extends ChannelInboundHandlerAdapter {
 
-    public ClientChannelHandler() {
+    public ExampleChannelHandler() {
         super();
     }
 
@@ -31,6 +33,10 @@ public class ClientChannelHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(@NotNull ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
         System.out.println("channelActive @@@@@@");
+        System.out.println("Sending Login Packet....");
+        ExampleLoginPacket loginPacket = new ExampleLoginPacket();
+        loginPacket.setPacketID(0);
+        ctx.channel().writeAndFlush(loginPacket.serialize(new PacketBuffer()).getByteBuf()).sync();
     }
 
     @Override
