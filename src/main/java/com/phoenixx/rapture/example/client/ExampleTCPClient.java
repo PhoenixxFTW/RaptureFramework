@@ -1,10 +1,11 @@
 package com.phoenixx.rapture.example.client;
 
 
-import com.phoenixx.rapture.example.server.ExampleLoginPacket;
-import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -36,15 +37,6 @@ public class ExampleTCPClient {
                 ExampleLoginPacket loginPacket = new ExampleLoginPacket();
                 loginPacket.setPacketID(0);
                 channel.writeAndFlush(loginPacket.serialize(new PacketBuffer()).getByteBuf()).sync();*/
-            }
-
-            @Override
-            public void channelActive(@NotNull ChannelHandlerContext ctx) throws Exception {
-                super.channelActive(ctx);
-                System.out.println("Sending Login Packet....");
-                ExampleLoginPacket loginPacket = new ExampleLoginPacket();
-                loginPacket.setPacketID(0);
-                ctx.channel().writeAndFlush(loginPacket.serialize(new PacketBuffer()).getByteBuf()).sync();
             }
         });
 

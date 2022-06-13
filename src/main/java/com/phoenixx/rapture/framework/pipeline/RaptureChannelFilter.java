@@ -10,7 +10,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.ipfilter.AbstractRemoteAddressFilter;
-import io.netty.util.AttributeKey;
 
 import java.net.InetSocketAddress;
 import java.util.Set;
@@ -29,9 +28,6 @@ import java.util.Set;
  */
 @ChannelHandler.Sharable
 public final class RaptureChannelFilter extends AbstractRemoteAddressFilter<InetSocketAddress> {
-
-    /** An attribute key used to retrieve this channel filter. */
-    public static final AttributeKey<Sharable> FILTER_KEY = AttributeKey.valueOf("channel_filter");
 
     /** An immutable set containing whitelisted (filter bypassing) addresses. */
     public static final ImmutableSet<String> WHITELIST = ImmutableSet.of("127.0.0.1");

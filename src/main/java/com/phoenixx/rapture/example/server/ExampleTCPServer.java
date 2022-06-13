@@ -21,7 +21,6 @@ public class ExampleTCPServer {
         NettyTCPServer tcpServer = new NettyTCPServer(new NettyConfig(new InetSocketAddress(PORT)).setServerVersion("1.0.0"), netServerHandler, channel -> {
             /*channel.pipeline().addLast("channel_client_init", new ExampleChannelHandler());*/
             channel.pipeline().addLast(HandshakeHandler.HANDSHAKE_HANDLER_ATTR.name(), new HandshakeHandler<>(ExampleLoginPacket.class, netServerHandler));
-            return netServerHandler;
         });
 
         Runtime.getRuntime().addShutdownHook(new Thread(tcpServer::stopServer));

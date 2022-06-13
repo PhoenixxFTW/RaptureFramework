@@ -14,19 +14,19 @@ import com.phoenixx.rapture.framework.packet.impl.AbstractPacket;
 public class ExampleLoginPacket extends AbstractPacket implements IHandshakePacket, IPacketHandler<ExampleLoginPacket, IPacket, ExamplePlayerConnection> {
 
     @Override
-    public void deserialize(PacketBuffer packetBuffer) throws Exception {
-        this.setPacketID(packetBuffer.readInt());
+    public PacketBuffer serialize() throws Exception {
+        this.packetBuffer.writeInt(this.getPacketID());
+        return this.packetBuffer;
     }
 
     @Override
-    public PacketBuffer serialize(PacketBuffer packetBuffer) throws Exception {
-        packetBuffer.writeInt(this.getPacketID());
-        return packetBuffer;
+    public void deserialize() throws Exception {
+        this.LOGGER.info("Deserializing login packet with ID: " + this.getPacketID());
     }
 
     @Override
     public IPacket processPacket(ExampleLoginPacket packet, ExamplePlayerConnection connection) {
-        System.out.println("LOG IN PACKET CALLED @@@@");
+        LOGGER.info("LOG IN PACKET CALLED @@@@");
         return this;
     }
 }

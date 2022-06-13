@@ -4,10 +4,11 @@ import com.phoenixx.rapture.framework.channel.DefaultChannelInitializer;
 import com.phoenixx.rapture.framework.managers.ConnectionManager;
 import com.phoenixx.rapture.framework.server.AbstractNettyServer;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
-import com.phoenixx.rapture.framework.util.ConsumerSupplier;
 import com.phoenixx.rapture.framework.util.NettyConfig;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
+import java.util.function.Consumer;
 
 /**
  * @author Phoenixx
@@ -16,8 +17,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class NettyTCPServer extends AbstractNettyServer {
 
-    public NettyTCPServer(NettyConfig nettyConfig, NetServerHandler<?,?,?> netServerHandler, ConsumerSupplier<Channel, NetServerHandler<?,?,?>> channelInitConsumer) {
-        super(nettyConfig, netServerHandler, new ConnectionManager<>(), new DefaultChannelInitializer(channelInitConsumer), NioServerSocketChannel.class);
+    public NettyTCPServer(NettyConfig nettyConfig, NetServerHandler<?,?,?> netServerHandler, Consumer<Channel> channelInitConsumer) {
+        super(nettyConfig, netServerHandler, new ConnectionManager<>(), new DefaultChannelInitializer(netServerHandler, channelInitConsumer), NioServerSocketChannel.class);
     }
 
     @Override

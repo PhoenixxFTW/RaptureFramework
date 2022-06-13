@@ -5,11 +5,10 @@ import com.phoenixx.rapture.framework.channel.UDPServerChannel;
 import com.phoenixx.rapture.framework.managers.ConnectionManager;
 import com.phoenixx.rapture.framework.server.AbstractNettyServer;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
-import com.phoenixx.rapture.framework.util.ConsumerSupplier;
 import com.phoenixx.rapture.framework.util.NettyConfig;
 import io.netty.channel.Channel;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.util.function.Consumer;
 
 /**
  * @author Phoenixx
@@ -18,10 +17,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class NettyUDPServer extends AbstractNettyServer {
 
-    private static final Logger LOGGER = LogManager.getLogger(NettyUDPServer.class);
-
-    public NettyUDPServer(NettyConfig nettyConfig, NetServerHandler<?,?,?> netServerHandler, ConsumerSupplier<Channel, NetServerHandler<?,?,?>> channelInitConsumer) {
-        super(nettyConfig, netServerHandler, new ConnectionManager<>(), new DefaultChannelInitializer(channelInitConsumer), UDPServerChannel.class);
+    public NettyUDPServer(NettyConfig nettyConfig, NetServerHandler<?,?,?> netServerHandler, Consumer<Channel> channelInitConsumer) {
+        super(nettyConfig, netServerHandler, new ConnectionManager<>(), new DefaultChannelInitializer(netServerHandler, channelInitConsumer), UDPServerChannel.class);
     }
 
     @Override

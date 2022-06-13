@@ -6,7 +6,7 @@
     </Properties>
     <Appenders>
         <Console name="SysOut" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{HH:mm:ss}] [%t/%level]: %msg%n" />
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%c] [%t/%level]: %msg%n" />
         </Console>
 
         <RollingRandomAccessFile name="File" fileName="logs/latest.log" filePattern="logs/latest-%d{yyyy-MM-dd}-%i.log.gz">

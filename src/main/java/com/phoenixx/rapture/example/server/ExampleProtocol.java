@@ -1,5 +1,6 @@
 package com.phoenixx.rapture.example.server;
 
+import com.phoenixx.rapture.framework.packet.IPacket;
 import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import com.phoenixx.rapture.framework.packet.impl.AbstractPacketRegistry;
 import com.phoenixx.rapture.framework.protocol.IProtocol;
@@ -22,12 +23,14 @@ public enum ExampleProtocol implements IProtocol {
 
         @Override
         public Integer getPacketID(PacketBuffer packetBuffer) {
+            ExampleProtocol.LOGGER.info("getPacket() Called in Example Protocol with packet ID: " + packetBuffer.copyPacketBuffer().readInt());
             return packetBuffer.readInt();
         }
 
         @Override
-        public void decodePacket(ChannelHandlerContext ctx, PacketBuffer packetBuffer) throws Exception {
-            super.decodePacket(ctx, packetBuffer);
+        public void decodePacket(ChannelHandlerContext ctx, IPacket packet) throws Exception {
+            ExampleProtocol.LOGGER.info("decodePacket() Called in Example Protocol with packet ID: " + packet.getPacketBuffer().readInt());
+            super.decodePacket(ctx, packet);
         }
     }),
 

@@ -7,10 +7,10 @@ import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import com.phoenixx.rapture.framework.protocol.IProtocol;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.ReadTimeoutException;
-import io.netty.util.AttributeKey;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,8 +27,6 @@ public class ByteDecoder extends SimpleChannelInboundHandler<ByteBuf> {
 
     private final Logger LOGGER = LogManager.getLogger(ByteDecoder.class);
 
-    public static final AttributeKey<Sharable> BYTE_DECODER_KEY = AttributeKey.valueOf("byte_decoder");
-
     public ByteDecoder(NetServerHandler<?,?,?> netHandler) {
         this.netHandler = netHandler;
     }
@@ -40,41 +38,48 @@ public class ByteDecoder extends SimpleChannelInboundHandler<ByteBuf> {
             return;
         }
 
-        int packetTypeId = msg.copy().readByte();
-
+        PacketBuffer packetBuffer = new PacketBuffer(msg);
         IConnection<?,?> connection = ctx.channel().attr(IConnection.CONNECTION_ATTR).get();
 
         if(connection != null) {
             IProtocol protocol = connection.getProtocol();
 
             if(protocol != null && protocol.getProtocolID() != -1 && protocol.getPacketRegistry() != null) {
-                Class<? extends IPacket> packetClass = protocol.getPacketRegistry().getPacket(new PacketBuffer(msg.copy()));
+                //TODO Should redo this so we always get the packet ID first and dont have to do all the bullshit with getPacket
+                //TODO Maybe use a BiSupplier or whatever here to return both the packetClass and packetID?
+                //TODO Actually wait does this even work properly for packet Ids nested inside abstractPacketRegistries?
+                int packetID = protocol.getPacketRegistry().getPacketID(packetBuffer.copyPacketBuffer());
+                Class<? extends IPacket> packetClass = protocol.getPacketRegistry().getPacket(packetBuffer.copyPacketBuffer());
 
                 if (packetClass != null) {
                     IPacket packet = packetClass.getConstructor().newInstance();
-                    if (packet instanceof IHandshakePacket) {
-                        IHandshakePacket handshakePacket = (IHandshakePacket) packet;
+                    packet.setPacketBuffer(packetBuffer);
+                    packet.setPacketID(packetID);
+                    packet.deserialize();
 
-                        handshakePacket.deserialize(new PacketBuffer(msg));
-                        ctx.fireChannelRead(handshakePacket);
+                    if (packet instanceof IHandshakePacket) {
+
+                        LOGGER.info("Passing message with ID: {} over to HANDSHAKE HANDLER:\n{}", packetID, ByteBufUtil.prettyHexDump(packet.getPacketBuffer().copyPacketBuffer()));
+
+                        ctx.fireChannelRead(packet);
                         ctx.pipeline().remove(this);
                         return;
                     }
                 }
-                LOGGER.warn("Client {} failed to provide a valid handshake request! Received packet: {} ", ctx.channel().remoteAddress(), packetTypeId);
+                this.LOGGER.warn("Client {} failed to provide a valid handshake request! Received packet: \n{} ", ctx.channel().remoteAddress(), ByteBufUtil.prettyHexDump(packetBuffer));
                 //throw new Exception("Invalid login request [" + packetTypeId + "]");
             } else {
-                LOGGER.warn("Cannot handle client {} with packet {} because no protocol has been set or can't find registry!", ctx.channel().remoteAddress(), packetTypeId);
+                LOGGER.warn("Cannot handle packet from client {} because no protocol has been set or can't find registry!", ctx.channel().remoteAddress());
             }
         } else {
-            LOGGER.warn("Client {} attempted to send packet {} with no previous connection! Disconnecting...", ctx.channel().remoteAddress(), packetTypeId);
-            ctx.channel().closeFuture().sync();
+            LOGGER.warn("Client {} attempted to send a packet with no previous connection! Disconnecting...", ctx.channel().remoteAddress());
         }
+        ctx.channel().closeFuture().sync();
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        if(!(cause instanceof ReadTimeoutException)){
+        if(!(cause instanceof ReadTimeoutException)) {
             LOGGER.error("Cannot exception for client {} while handling handshake request. Cause: ", ctx.channel().remoteAddress(), cause);
         }
     }

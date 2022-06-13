@@ -15,6 +15,7 @@ public class ExamplePlayerConnection extends AbstractConnection<ExampleNetHandle
 
     public ExamplePlayerConnection(int id, UUID uuid, ExampleNetHandler netHandler, Channel channel) {
         super(id, uuid, netHandler, channel);
+        this.setProtocol(ExampleProtocol.HANDSHAKE);
     }
 
     @Override

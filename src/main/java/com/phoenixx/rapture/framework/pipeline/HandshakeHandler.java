@@ -7,6 +7,8 @@ import com.phoenixx.rapture.framework.connection.ConnectionStatus;
 import com.phoenixx.rapture.framework.connection.IConnection;
 import com.phoenixx.rapture.framework.packet.IHandshakePacket;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
+import com.phoenixx.rapture.framework.server.impl.NettyTCPServer;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
@@ -43,8 +45,14 @@ public class HandshakeHandler<REQ extends IHandshakePacket, H extends NetServerH
                 connection.setConnectionStatus(ConnectionStatus.CONNECTED);
 
                 ctx.channel().attr(NetHandler.NET_HANDLER_ATTR).set(netHandler);
-                ctx.channel().pipeline().addLast(PacketDecoder.PIPELINE_NAME, new PacketDecoder());
+                ctx.channel().pipeline().addLast("packet_decoder", new PacketDecoder());
                 ctx.channel().pipeline().addLast(AbstractConnection.CONNECTION_ATTR.name(), connection);
+
+                // We do this since the UDP channel normally will call this but the TCP / NIO channel doesn't
+                if(this.netHandler.getAbstractNettyServer() instanceof NettyTCPServer) {
+                    System.out.println("Passing message over to packet decoder:\n" + ByteBufUtil.prettyHexDump(msg.getPacketBuffer().copyPacketBuffer()));
+                    //ctx.fireChannelRead(msg);// Send the message down to the next pipeline which is going to be the packet decoder
+                }
 
                 ctx.channel().pipeline().remove(this);
             } else {

@@ -1,7 +1,6 @@
 package com.phoenixx.rapture.framework.connection;
 
 import com.phoenixx.rapture.framework.packet.IPacket;
-import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import com.phoenixx.rapture.framework.protocol.IProtocol;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -52,7 +51,8 @@ public interface IConnection<S extends DefaultSession, T extends IProtocol> exte
     default void sendPacket(IPacket packet) {
         try {
             if(this.getChannel().isOpen()) {
-                this.getChannel().writeAndFlush(packet.serialize(new PacketBuffer()).getByteBuf()).sync();
+                // TODO Create a packet encoder so we're not sending byte bufs
+                this.getChannel().writeAndFlush(packet.serialize().getByteBuf()).sync();
             }
         } catch (Exception e) {
             e.printStackTrace();

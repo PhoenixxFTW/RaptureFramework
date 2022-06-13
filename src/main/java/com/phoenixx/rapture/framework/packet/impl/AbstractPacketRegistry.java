@@ -36,8 +36,7 @@ public abstract class AbstractPacketRegistry {
 
     public abstract void registerPackets();
 
-    public void processPacket(ChannelHandlerContext ctx, IPacket packet, PacketBuffer packetBuffer) throws Exception{
-        packet.deserialize(packetBuffer);
+    public void processPacket(ChannelHandlerContext ctx, IPacket packet) throws Exception {
         ctx.fireChannelRead(packet);
     }
 
@@ -46,23 +45,19 @@ public abstract class AbstractPacketRegistry {
      * (Which can still be called after this)
      *
      * @param ctx The channels {@link ChannelHandlerContext}
-     * @param packetBuffer The {@link PacketBuffer} which contains all the bytes
+     * @param packet The {@link IPacket} which contains all the bytes
      * @throws Exception Throws an exception if anything goes wrong while decoding / deserializing
      */
-    public void decodePacket(ChannelHandlerContext ctx, PacketBuffer packetBuffer) throws Exception {
-        int packetID = this.getPacketID(packetBuffer.copyPacketBuffer());
+    public void decodePacket(ChannelHandlerContext ctx, IPacket packet) throws Exception {
+        int packetID = packet.getPacketID();
 
-        if(this.getPacketMap().containsKey(packetID)){
-                Class<? extends IPacket> packetClass = this.getPacketMap().get(packetID);
-            if(packetClass != null){
-                IPacket packet = packetClass.getConstructor().newInstance();
-                this.processPacket(ctx, packet, packetBuffer);
-            }
+        if(this.getPacketMap().containsKey(packetID)) {
+            this.processPacket(ctx, packet);
         } else {
             if(this.getPacketRegistryMap().containsKey(packetID)){
-                this.getPacketRegistryMap().get(packetID).decodePacket(ctx, packetBuffer);
+                this.getPacketRegistryMap().get(packetID).decodePacket(ctx, packet);
             } else {
-                LOGGER.warn("Unknown packet received with type {} Other packets: {} Hex: \n{}", packetID, this.getClass(), ByteBufUtil.prettyHexDump(packetBuffer));
+                LOGGER.warn("Unknown packet received with type {} Other packets: {} Hex: \n{}", packetID, this.getClass(), ByteBufUtil.prettyHexDump(packet.getPacketBuffer()));
             }
         }
     }
@@ -129,6 +124,26 @@ public abstract class AbstractPacketRegistry {
      */
     public Class<? extends IPacket> getPacket(PacketBuffer packetBuffer) {
         return getPacket(packetBuffer, this);
+    }
+
+    /**
+     * //TODO TEST IF THIS WORKS, NEVER TESTED BEFORE
+     * Recursively finds the packet ID for a given {@link PacketBuffer} and the current {@link AbstractPacketRegistry}
+     * @param packetBuffer The {@link IPacket}'s {@link PacketBuffer} containing the packet ID we're searching for
+     * @return The packet ID if the packet is inside the registry map
+     */
+    public int searchForPacketID(PacketBuffer packetBuffer, AbstractPacketRegistry packetRegistry) {
+        int packetID = packetRegistry.getPacketID(packetBuffer.copyPacketBuffer());
+        if(!packetRegistry.getPacketMap().containsKey(packetID)) {
+            if(packetRegistry.getPacketRegistryMap().size() > 0) {
+                for (AbstractPacketRegistry registry : packetRegistry.getPacketRegistryMap().values()) {
+                    packetID = packetRegistry.searchForPacketID(packetBuffer.copyPacketBuffer(), registry);
+                }
+            } else {
+                return -1;
+            }
+        }
+        return packetID;
     }
 
     /**
