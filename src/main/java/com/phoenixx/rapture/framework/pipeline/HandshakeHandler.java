@@ -51,7 +51,7 @@ public class HandshakeHandler<REQ extends IHandshakePacket, H extends NetServerH
                 // We do this since the UDP channel normally will call this but the TCP / NIO channel doesn't
                 if(this.netHandler.getAbstractNettyServer() instanceof NettyTCPServer) {
                     System.out.println("Passing message over to packet decoder:\n" + ByteBufUtil.prettyHexDump(msg.getPacketBuffer().copyPacketBuffer()));
-                    //ctx.fireChannelRead(msg);// Send the message down to the next pipeline which is going to be the packet decoder
+                    ctx.fireChannelRead(msg);// Send the message down to the next pipeline which is going to be the packet decoder
                 }
 
                 ctx.channel().pipeline().remove(this);

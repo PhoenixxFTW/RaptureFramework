@@ -7,7 +7,6 @@ import com.phoenixx.rapture.framework.pipeline.RaptureChannelFilter;
 import com.phoenixx.rapture.framework.server.NetServerHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import io.netty.handler.timeout.ReadTimeoutHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -32,9 +31,8 @@ public class DefaultChannelInitializer extends ChannelInitializer<Channel> imple
 
     @Override
     protected void initChannel(@NotNull Channel channel) throws Exception {
-        // We add this first, so we can reference the "read_timeout" handler
         if (this.doOriginalPipeLineSetup()) {
-            channel.pipeline().addLast("read_timeout", new ReadTimeoutHandler(10));
+            //channel.pipeline().addLast("read_timeout", new ReadTimeoutHandler(10));
             channel.pipeline().addLast("channel_filter", new RaptureChannelFilter(this.netHandler));
         }
 
@@ -48,9 +46,7 @@ public class DefaultChannelInitializer extends ChannelInitializer<Channel> imple
 
             this.netHandler.getAbstractNettyServer().getConnectionManager().putConnection(connection.getConnectionID(), connection);
 
-            if (this.doOriginalPipeLineSetup()) {
-                channel.pipeline().addLast("byte_decoder", new ByteDecoder(this.netHandler));
-            }
+            channel.pipeline().addLast("byte_decoder", new ByteDecoder(this.netHandler));
 
             this.initConsumer.accept(channel);
 
