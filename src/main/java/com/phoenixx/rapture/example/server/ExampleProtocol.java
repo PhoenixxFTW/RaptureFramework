@@ -1,5 +1,8 @@
 package com.phoenixx.rapture.example.server;
 
+import com.phoenixx.rapture.example.packets.ExampleLoginPacket;
+import com.phoenixx.rapture.example.packets.ExampleLoginResponsePacket;
+import com.phoenixx.rapture.example.packets.ExampleTestPacket;
 import com.phoenixx.rapture.framework.packet.IPacket;
 import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import com.phoenixx.rapture.framework.packet.impl.AbstractPacketRegistry;
@@ -37,6 +40,8 @@ public enum ExampleProtocol implements IProtocol {
     GAME(1, new AbstractPacketRegistry() {
         @Override
         public void registerPackets() {
+            this.registerPacket(1, ExampleLoginResponsePacket.class, new ExampleLoginResponsePacket());
+            this.registerPacket(2, ExampleTestPacket.class, new ExampleTestPacket());
         }
 
         @Override

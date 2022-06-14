@@ -66,7 +66,7 @@ public abstract class AbstractConnection<NH extends NetServerHandler<?,?,S>, S e
      * @param <P> The type of {@link IPacket}
      */
     @SuppressWarnings("unchecked")
-    protected <P extends IPacket> void handlePacket(P packet) {
+    protected <P extends IPacket> void handlePacket(P packet) throws Exception {
         IPacketHandler<P, ?, ? super AbstractConnection<NH,S,T>> handler = (IPacketHandler<P, ?, ? super AbstractConnection<NH,S,T>>) getProtocol().getPacketRegistry().getRegistryFromPacket(packet.getClass()).getPacketHandler(packet.getClass());
         if(handler != null) {
             handler.processPacket(packet, this);

@@ -1,5 +1,6 @@
 package com.phoenixx.rapture.example.server;
 
+import com.phoenixx.rapture.example.packets.ExampleLoginPacket;
 import com.phoenixx.rapture.framework.connection.DefaultSession;
 import com.phoenixx.rapture.framework.pipeline.HandshakeHandler;
 import com.phoenixx.rapture.framework.server.NetServerHandler;

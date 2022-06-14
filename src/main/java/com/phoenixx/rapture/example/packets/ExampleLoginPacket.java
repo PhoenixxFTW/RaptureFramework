@@ -1,5 +1,7 @@
-package com.phoenixx.rapture.example.server;
+package com.phoenixx.rapture.example.packets;
 
+import com.phoenixx.rapture.example.server.ExamplePlayerConnection;
+import com.phoenixx.rapture.example.server.ExampleProtocol;
 import com.phoenixx.rapture.framework.packet.IHandshakePacket;
 import com.phoenixx.rapture.framework.packet.IPacket;
 import com.phoenixx.rapture.framework.packet.IPacketHandler;
@@ -15,8 +17,8 @@ public class ExampleLoginPacket extends AbstractPacket implements IHandshakePack
 
     @Override
     public PacketBuffer serialize() throws Exception {
-        this.packetBuffer.writeInt(this.getPacketID());
-        return this.packetBuffer;
+        this.getPacketBuffer().writeInt(this.getPacketID());
+        return this.getPacketBuffer();
     }
 
     @Override
@@ -25,8 +27,13 @@ public class ExampleLoginPacket extends AbstractPacket implements IHandshakePack
     }
 
     @Override
-    public IPacket processPacket(ExampleLoginPacket packet, ExamplePlayerConnection connection) {
+    public IPacket processPacket(ExampleLoginPacket packet, ExamplePlayerConnection connection) throws Exception {
         LOGGER.info("LOG IN PACKET CALLED @@@@");
+        connection.setProtocol(ExampleProtocol.GAME);
+        ExampleLoginResponsePacket responsePacket = new ExampleLoginResponsePacket();
+        responsePacket.type = 1;
+        responsePacket.serialize();
+        connection.sendPacket(responsePacket);
         return this;
     }
 }

@@ -24,6 +24,6 @@ public interface IPacketHandler<REQ extends IPacket, REPLY extends IPacket, C ex
      * @param connection The {@link IConnection} that sent this packet
      * @return A {@link IPacket} (CURRENTLY UNUSED)
      */
-    REPLY processPacket(REQ packet, C connection);
+    REPLY processPacket(REQ packet, C connection) throws Exception;
 
 }

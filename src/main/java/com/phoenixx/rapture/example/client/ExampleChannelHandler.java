@@ -1,6 +1,6 @@
 package com.phoenixx.rapture.example.client;
 
-import com.phoenixx.rapture.example.server.ExampleLoginPacket;
+import com.phoenixx.rapture.example.packets.ExampleLoginPacket;
 import com.phoenixx.rapture.framework.packet.PacketBuffer;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
